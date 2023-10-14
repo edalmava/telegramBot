@@ -32,6 +32,12 @@ def webhook():
        """
        # send the welcoming message
        bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
+    elif text == "/help":
+       bot_welcome = """
+       Envíe el número de la OPEC a consultar.
+       """
+       # send the welcoming message
+       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
     else:
        try:
            # clear the message we got from any non alphabets
