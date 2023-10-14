@@ -8,11 +8,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Hello, World!'
+    return '¡Bienvenido al Bot Opec!'
 
 @app.route('/about')
 def about():
-    return 'About'
+    return 'Bot de Telegram de consulta de OPEC creado por Edalmava'
 
 @app.route('/webhook', methods=['POST'])
 def webhook():    
