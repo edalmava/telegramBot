@@ -52,7 +52,7 @@ def webhook():
            if len(data) == 0:
                bot.sendMessage(chat_id=chat_id, text='No hay lista disponible por el momento', parse_mode='HTML', reply_to_message_id=msg_id)
            else:
-               text = f'<strong>{data[0].get("lista").get("empleoSimo").get("denominacion").get("nombre")}</strong>'
+               text = f'<strong>{data[0].get("lista").get("empleoSimo").get("denominacion").get("nombre")}</strong>\n'
                text += f'<b>Nro. Resolución:</b> <a href="{data[0].get("urlActoAdministrativo")}">{data[0].get("numeroActo")}</a>\n'
                text += f'<b>Nro. Lista:</b> {str(data[0].get("lista").get("id"))}\n'
                text += f'<b>Fecha Publicación:</b> {data[0].get("fechaPublicacion")}\n'
@@ -67,7 +67,7 @@ def webhook():
                data = response.json()
 
                for i in data:
-                   text += f'<b>C.C:</b> {i.get("identificacion")}\n'
+                   text += f'<b>{i.get("puesto")}</b> - <b>C.C:</b> {i.get("identificacion")}\n'
 
                bot.sendMessage(chat_id=chat_id, text=text, parse_mode='HTML', reply_to_message_id=msg_id)
        except Exception:
