@@ -49,6 +49,10 @@ def webhook():
 
            data = response.json()
 
+           if len(data) == 0:
+               bot.sendMessage(chat_id=chat_id, text='No hay lista disponible por el momento', parse_mode='HTML', reply_to_message_id=msg_id)
+               return None
+
            text = data[0].get('numeroActo') 
            text += str(data[0].get('lista').get('id'))
            text += data[0].get('fechaPublicacion')
