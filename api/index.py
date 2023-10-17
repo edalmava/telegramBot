@@ -51,25 +51,24 @@ def webhook():
 
            if len(data) == 0:
                bot.sendMessage(chat_id=chat_id, text='No hay lista disponible por el momento', parse_mode='HTML', reply_to_message_id=msg_id)
-               return None
+           else:
+               text = data[0].get('numeroActo') 
+               text += str(data[0].get('lista').get('id'))
+               text += data[0].get('fechaPublicacion')
+               text += str(data[0].get('estadoPublicado')) 
+               text += str(data[0].get('lista').get('publicaElegible').get('id'))
 
-           text = data[0].get('numeroActo') 
-           text += str(data[0].get('lista').get('id'))
-           text += data[0].get('fechaPublicacion')
-           text += str(data[0].get('estadoPublicado')) 
-           text += str(data[0].get('lista').get('publicaElegible').get('id'))
+               url = 'https://listadet.edalmava.workers.dev/'
+               payload = {'id': data[0].get('lista').get('publicaElegible').get('id')}
 
-           url = 'https://listadet.edalmava.workers.dev/'
-           payload = {'id': data[0].get('lista').get('publicaElegible').get('id')}
+               response = requests.post(url, json=payload)
 
-           response = requests.post(url, json=payload)
+               data = response.json()
 
-           data = response.json()
+               for i in data:
+                   text += i.get('identificacion')
 
-           for i in data:
-               text += i.get('identificacion') 
-
-           bot.sendMessage(chat_id=chat_id, text=text, parse_mode='HTML', reply_to_message_id=msg_id)
+               bot.sendMessage(chat_id=chat_id, text=text, parse_mode='HTML', reply_to_message_id=msg_id)
        except Exception:
            # if things went wrong
            bot.sendMessage(chat_id=chat_id, text="There was a problem in the name you used, please enter different name", reply_to_message_id=msg_id)
