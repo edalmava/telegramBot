@@ -52,11 +52,11 @@ def webhook():
            if len(data) == 0:
                bot.sendMessage(chat_id=chat_id, text='No hay lista disponible por el momento', parse_mode='HTML', reply_to_message_id=msg_id)
            else:
-               text = f'<a href="{data[0].get("urlActoAdministrativo")}">{data[0].get("numeroActo")}</a>' + '\n'
-               text += str(data[0].get('lista').get('id')) + '\n'
-               text += data[0].get('fechaPublicacion') + '\n'
-               text += str(data[0].get('estadoPublicado')) + '\n'
-               text += str(data[0].get('lista').get('publicaElegible').get('id')) + '\n'
+               text = f'<b>Nro. Resolución:</b> <a href="{data[0].get("urlActoAdministrativo")}">{data[0].get("numeroActo")}</a>\n'
+               text += f'<b>Nro. Lista:</b> {str(data[0].get("lista").get("id"))}\n'
+               text += f'<b>Fecha Publicación:</b> {data[0].get("fechaPublicacion")}\n'
+               text += f'<b>Estado:</b> {str(data[0].get("estadoPublicado"))}\n\n'
+               #text += str(data[0].get('lista').get('publicaElegible').get('id')) + '\n'
 
                url = 'https://listadet.edalmava.workers.dev/'
                payload = {'id': data[0].get('lista').get('publicaElegible').get('id')}
@@ -66,7 +66,7 @@ def webhook():
                data = response.json()
 
                for i in data:
-                   text += i.get('identificacion') + '\n'
+                   text += f'<b>C.C:</b> {i.get("identificacion")}\n'
 
                bot.sendMessage(chat_id=chat_id, text=text, parse_mode='HTML', reply_to_message_id=msg_id)
        except Exception:
