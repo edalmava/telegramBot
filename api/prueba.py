@@ -1,10 +1,12 @@
 import requests
 
 url = 'https://lista.edalmava.workers.dev/'
-payload = {'codigoEmpleo': '185091', 'codigoConvocatoria': "secretaría"}
+payload = {'codigoEmpleo': '185139', 'codigoConvocatoria': "secretaría"}
 response = requests.post(url, json=payload)
 
 data = response.json()
+
+print(data[0].get('lista').get('empleoSimo').get('denominacion').get('nombre'))
 
 if len(data) == 0:
     print('No hay lista disponible por el momento')
