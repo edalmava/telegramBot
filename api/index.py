@@ -39,14 +39,33 @@ def webhook():
        # send the welcoming message
        bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
     else:
-       try:
-           # clear the message we got from any non alphabets
-           text = re.sub(r"\W", "_", text)
-           # create the api link for the avatar based on http://avatars.adorable.io/
-           url = "https://ui-avatars.com/api/?name={}&background=0D8ABC&color=fff&size=128".format(text.strip())
-           # reply with a photo to the name the user sent,
-           # note that you can send photos by url and telegram will fetch it for you
-           bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
+       try:           
+           #text = re.sub(r"\W", "_", text)           
+           #url = "https://ui-avatars.com/api/?name={}&background=0D8ABC&color=fff&size=128".format(text.strip())           
+           #bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
+           url = 'https://lista.edalmava.workers.dev/'
+           payload = {'codigoEmpleo': '185139', 'codigoConvocatoria': "secretaría"}
+           response = requests.post(url, json=payload)
+
+           data = response.json()
+
+           text = data[0].get('numeroActo')
+           text += str(data[0].get('lista').get('id'))
+           text += data[0].get('fechaPublicacion')
+           text += str(data[0].get('estadoPublicado'))
+           text += str(data[0].get('lista').get('publicaElegible').get('id'))
+
+           url = 'https://listadet.edalmava.workers.dev/'
+           payload = {'id': data[0].get('lista').get('publicaElegible').get('id')}
+
+           response = requests.post(url, json=payload)
+
+           data = response.json()
+
+           for i in data:
+               text += i.get('identificacion')
+
+           bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
        except Exception:
            # if things went wrong
            bot.sendMessage(chat_id=chat_id, text="There was a problem in the name you used, please enter different name", reply_to_message_id=msg_id)
