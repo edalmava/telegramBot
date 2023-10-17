@@ -44,7 +44,7 @@ def webhook():
            #url = "https://ui-avatars.com/api/?name={}&background=0D8ABC&color=fff&size=128".format(text.strip())           
            #bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
            url = 'https://lista.edalmava.workers.dev/'
-           payload = {'codigoEmpleo': '185139', 'codigoConvocatoria': "secretaría"}
+           payload = {'codigoEmpleo': text, 'codigoConvocatoria': "secretaría"}
            response = requests.post(url, json=payload)
 
            data = response.json()
@@ -65,7 +65,7 @@ def webhook():
            for i in data:
                text += i.get('identificacion') + '<br>'
 
-           bot.sendMessage(chat_id=chat_id, text=text, reply_to_message_id=msg_id)
+           bot.sendMessage(chat_id=chat_id, parse_mode='HTML', text=text, reply_to_message_id=msg_id)
        except Exception:
            # if things went wrong
            bot.sendMessage(chat_id=chat_id, text="There was a problem in the name you used, please enter different name", reply_to_message_id=msg_id)
