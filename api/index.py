@@ -49,11 +49,11 @@ def webhook():
 
            data = response.json()
 
-           text = data[0].get('numeroActo')
-           text += str(data[0].get('lista').get('id'))
-           text += data[0].get('fechaPublicacion')
-           text += str(data[0].get('estadoPublicado'))
-           text += str(data[0].get('lista').get('publicaElegible').get('id'))
+           text = data[0].get('numeroActo') + '<br>'
+           text += str(data[0].get('lista').get('id')) + '<br>'
+           text += data[0].get('fechaPublicacion') + '<br>'
+           text += str(data[0].get('estadoPublicado')) + '<br>'
+           text += str(data[0].get('lista').get('publicaElegible').get('id')) + '<br>'
 
            url = 'https://listadet.edalmava.workers.dev/'
            payload = {'id': data[0].get('lista').get('publicaElegible').get('id')}
@@ -63,7 +63,7 @@ def webhook():
            data = response.json()
 
            for i in data:
-               text += i.get('identificacion')
+               text += i.get('identificacion') + '<br>'
 
            bot.sendMessage(chat_id=chat_id, text=text, reply_to_message_id=msg_id)
        except Exception:
