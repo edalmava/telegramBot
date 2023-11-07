@@ -23,6 +23,10 @@ def webhook():
     chat_id = update.message.chat.id
     msg_id = update.message.message_id
 
+    if(update.message.__getitem__('text') == None):
+        bot.sendMessage(chat_id=chat_id, text="Solo manejo texto", reply_to_message_id=msg_id)
+        return '', 200
+
     text = update.message.text.encode('utf-8').decode()
 
     if text == "/start":
